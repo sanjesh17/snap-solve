@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+import Conversation from "../components/Conversation"
+import AiPrompts from "./AiPrompts";
+
 const ImageUpload = () => {
   const [file, setFile] = useState(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const [prompt, setPrompt] = useState("");
+  const [userPrompts, setUserPrompts] = useState([]);
+  const [aiPrompts, setAiPrompts] = useState([]);
+  
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
 
@@ -11,21 +19,34 @@ const ImageUpload = () => {
     setFile(e.target.files[0]);
   };
 
-  const handlePromptChange = (e) => {
-    setPrompt(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
 
     if (!file) {
       alert("Please select an image.");
       return;
     }
+    setFormSubmitted(true); // for uploading image
 
+  }
+
+  const createResponse = async (e) => {
+
+    e.preventDefault();
+    
+    setPrompt("");
     const formData = new FormData();
+
+    console.log('file: ' + file);
+    console.log('prompt' + prompt);
+   
     formData.append("image", file);
     formData.append("prompt", prompt);
+
+    setUserPrompts((prevItem) => [...prevItem, prompt])
+    console.log(prompt);
+    console.log('array: '+userPrompts);
 
     try {
       const response = await fetch(
@@ -40,6 +61,9 @@ const ImageUpload = () => {
 
       if (response.ok) {
         setResult(data.response);
+        setAiPrompts((prevItem) => [...prevItem, data.response]);
+        console.log('array: '+ aiPrompts);
+        console.log(data.response);
       } else {
         setError(data.error || "An error occurred.");
       }
@@ -50,27 +74,30 @@ const ImageUpload = () => {
   };
 
   return (
-    <div>
-      <h1>Upload and Process an Image</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept="image/*"
-          required
-        />
-        <br />
-        <input
-          type="text"
-          value={prompt}
-          onChange={handlePromptChange}
-          placeholder="Enter prompt (optional)"
-        />
-        <br />
-        <button type="submit">Upload</button>
-      </form>
+    <div className="grid place-items-center">
 
-      {result && (
+      {!formSubmitted && (
+        <>
+          <form className="grid" onSubmit={handleSubmit}>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              required
+            />
+            
+            <button type="submit">Upload Image</button>
+          </form>
+        </>
+      )}
+
+      {formSubmitted && (
+        <div className="w-full">
+          <Conversation setPrompt={setPrompt} createResponse={createResponse} userPrompts={userPrompts} aiPrompts={aiPrompts} />
+        </div>
+      )}
+
+      {/* {result && (
         <div>
           <h2>Response:</h2>
           <ReactMarkdown>{result}</ReactMarkdown>
@@ -82,7 +109,7 @@ const ImageUpload = () => {
           <h2>Error:</h2>
           <p>{error}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
