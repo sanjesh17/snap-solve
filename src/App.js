@@ -1,5 +1,5 @@
 import React from "react";
-import ImageUpload from "./components/Response/ResPage";
+import ImageUpload from "./components/ImageUpload";
 
 const App = () => {
   return (
