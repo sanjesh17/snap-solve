@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-import Conversation from "../components/Conversation"
+import Conversation from "../components/Conversation";
 import AiPrompts from "./AiPrompts";
 
 const ImageUpload = () => {
@@ -9,44 +9,43 @@ const ImageUpload = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [prompt, setPrompt] = useState("");
+  const [previewImg, setPreviewImg] = useState();
   const [userPrompts, setUserPrompts] = useState([]);
   const [aiPrompts, setAiPrompts] = useState([]);
-  
+
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    setPreviewImg(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if (!file) {
       alert("Please select an image.");
       return;
     }
     setFormSubmitted(true); // for uploading image
-
-  }
+  };
 
   const createResponse = async (e) => {
-
     e.preventDefault();
-    
+
     setPrompt("");
     const formData = new FormData();
 
-    console.log('file: ' + file);
-    console.log('prompt' + prompt);
-   
+    console.log("file: " + file);
+    console.log("prompt" + prompt);
+
     formData.append("image", file);
     formData.append("prompt", prompt);
 
-    setUserPrompts((prevItem) => [...prevItem, prompt])
+    setUserPrompts((prevItem) => [...prevItem, prompt]);
     console.log(prompt);
-    console.log('array: '+userPrompts);
+    console.log("array: " + userPrompts);
 
     try {
       const response = await fetch(
@@ -62,7 +61,7 @@ const ImageUpload = () => {
       if (response.ok) {
         setResult(data.response);
         setAiPrompts((prevItem) => [...prevItem, data.response]);
-        console.log('array: '+ aiPrompts);
+        console.log("array: " + aiPrompts);
         console.log(data.response);
       } else {
         setError(data.error || "An error occurred.");
@@ -75,25 +74,49 @@ const ImageUpload = () => {
 
   return (
     <div className="grid place-items-center">
-
       {!formSubmitted && (
         <>
-          <form className="grid" onSubmit={handleSubmit}>
+          <form className="flex" onSubmit={handleSubmit}>
             <input
               type="file"
               onChange={handleFileChange}
               accept="image/*"
               required
             />
-            
+
             <button type="submit">Upload Image</button>
+          </form>
+        </>
+      )}
+
+      <span>Or</span>
+
+      {!formSubmitted && (
+        <>
+          <form className="flex" onSubmit={handleSubmit}>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              accept="image/*"
+              required
+            />
+
+            <button type="submit">Take Photo</button>
           </form>
         </>
       )}
 
       {formSubmitted && (
         <div className="w-full">
-          <Conversation setPrompt={setPrompt} createResponse={createResponse} userPrompts={userPrompts} aiPrompts={aiPrompts} />
+          <div className="grid place-items-center">
+            <img src={previewImg} />
+          </div>
+          <Conversation
+            setPrompt={setPrompt}
+            createResponse={createResponse}
+            userPrompts={userPrompts}
+            aiPrompts={aiPrompts}
+          />
         </div>
       )}
 
