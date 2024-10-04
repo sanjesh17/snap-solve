@@ -9,9 +9,6 @@ const Navbar = () => {
         <Link to="/" className="text-xl font-400">
           snapsolve
         </Link>
-        <Link to="/signin" className="md:text-md text-normal">
-          Login/Signup
-        </Link>
       </div>
     </nav>
   );
