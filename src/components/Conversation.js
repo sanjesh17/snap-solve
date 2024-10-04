@@ -22,7 +22,7 @@ const Conversation = (props) => {
             className="bg-orange-300 w-max-[490px] px-3 py-2 mb-4"
             style={{ borderRadius: "10px 10px 10px 0" }}
           >
-            <h5 className="font-medium">Assistant</h5>
+            <h5 className="font-medium">SnapSolve</h5>
             <p className="text-sm">Hello, this is SnapSolve</p>
           </div>
           {userPrompts.map((userPrompt, index) => (
@@ -39,10 +39,10 @@ const Conversation = (props) => {
               {aiPrompts[index] && (
                 <div className="mb-4">
                   <div
-                    className="bg-orange-300 w-max-[490px] px-3 py-2 mx-3"
+                    className="bg-orange-300 w-max-[490px] px-3 py-2"
                     style={{ borderRadius: "10px 10px 10px 0" }}
                   >
-                    <h5 className="font-medium">Assistant</h5>
+                    <h5 className="font-medium">SnapSolve</h5>
                     <p className="text-sm">
                       <Markdown remarkPlugins={[remarkGfm]}>
                         {aiPrompts[index]}

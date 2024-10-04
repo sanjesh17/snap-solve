@@ -80,7 +80,7 @@ const ImageUpload = () => {
             <div className="flex items-center justify-center w-2/4">
               <label
                 htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer transition-all ease-in-out duration-200 bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
               >
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <svg
@@ -117,7 +117,7 @@ const ImageUpload = () => {
                 {file && <span className="text-gray-300">{file.name}</span>}
                 <button
                   onClick={handleSubmit}
-                  className="text-gray-300 my-3 border px-3 py-2 rounded-lg hover:bg-gray-400 hover:text-white"
+                  className="text-gray-300 my-3 border px-3 py-2 rounded-lg transition-all ease-in-out duration-200 hover:bg-gray-400 hover:text-white"
                 >
                   Start a Snap
                 </button>
@@ -127,7 +127,7 @@ const ImageUpload = () => {
         </>
       )}
       {formSubmitted && (
-        <div className="bg-zinc-900 w-5/6 rounded-2xl shadow-xl">
+        <div className="w-5/6 rounded-2xl shadow-xl bg-white bg-opacity-15 backdrop-blur-sm border border-white border-opacity-18">
           <div className="w-full grid grid-cols-5 px-3 py-3 relative">
             <div className="col-span-2 grid place-content-center">
               <img src={previewImg} className="max-h-80" />
