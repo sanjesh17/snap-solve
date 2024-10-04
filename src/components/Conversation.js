@@ -15,8 +15,8 @@ const Conversation = (props) => {
   };
 
   return (
-    <div className="grid place-content-center">
-      <div className="px-36 py-12 w-[1000px]">
+    <div className="grid place-content-center col-span-3">
+      <div className="py-12 w-[700px]">
         <div className="bg-slate-50 p-4 rounded-lg border border-[#ccc]">
           <div
             className="bg-orange-300 w-max-[490px] px-3 py-2 mb-4"

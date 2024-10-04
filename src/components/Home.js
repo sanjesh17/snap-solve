@@ -8,7 +8,7 @@ const Home = () => {
       className="grid overflow-y-hidden"
       style={{ gridTemplateColumns: "60% 40%" }}
     >
-      <div className="flex justify-center flex-col h-[89vh] font-play text-white pl-10">
+      <div className="flex justify-center mx-[5.8rem] flex-col h-[89vh] font-play text-white pl-10">
         <h1 className="text-[80px]">Snap, Upload, Chat</h1>
         <h3 className="text-[30px]">Your Visuals, Our AI, Endless Insights.</h3>
         <Link to="/chat">
